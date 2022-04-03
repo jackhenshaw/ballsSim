@@ -32,6 +32,7 @@ public:
 
   // access functions to number of balls in simulation
   int StandardListSize() { return fListStandard.size(); }
+  int TotalBallNum() { return fListTotal.size(); }
 
 private slots:
   void MoveBall();
@@ -40,7 +41,7 @@ private:
   QTimer *fSimTimer;
   QGraphicsScene *fScene;
   QList<StandardBall *> fListStandard;
-
+  QList<GenericBall *>  fListTotal;
 };
 
 #endif /* SIMULATION_H_ */

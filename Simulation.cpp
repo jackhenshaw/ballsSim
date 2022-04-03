@@ -35,6 +35,7 @@ void Simulation::AddStandard() {
   StandardBall *ball = new StandardBall();
   fScene->addItem(ball);
   fListStandard.append(ball);
+  fListTotal.append(ball);
 }
 
 void Simulation::RemoveStandard() {
@@ -42,6 +43,7 @@ void Simulation::RemoveStandard() {
   StandardBall *ball = fListStandard.last();
   fScene->removeItem(ball);
   fListStandard.removeLast();
+  fListTotal.removeLast();
   delete ball;
 }
 
