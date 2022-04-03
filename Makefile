@@ -54,10 +54,12 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		TwoVector.cpp \
-		GenericBall.cpp moc_GenericBall.cpp
+		GenericBall.cpp \
+		StandardBall.cpp moc_GenericBall.cpp
 OBJECTS       = main.o \
 		TwoVector.o \
 		GenericBall.o \
+		StandardBall.o \
 		moc_GenericBall.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -137,9 +139,11 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		project.pro TwoVector.h \
-		GenericBall.h main.cpp \
+		GenericBall.h \
+		StandardBall.h main.cpp \
 		TwoVector.cpp \
-		GenericBall.cpp
+		GenericBall.cpp \
+		StandardBall.cpp
 QMAKE_TARGET  = test
 DESTDIR       = build/
 TARGET        = build/test
@@ -324,8 +328,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents TwoVector.h GenericBall.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp TwoVector.cpp GenericBall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents TwoVector.h GenericBall.h StandardBall.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp TwoVector.cpp GenericBall.cpp StandardBall.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -391,6 +395,11 @@ TwoVector.o: TwoVector.cpp TwoVector.h
 GenericBall.o: GenericBall.cpp GenericBall.h \
 		TwoVector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GenericBall.o GenericBall.cpp
+
+StandardBall.o: StandardBall.cpp StandardBall.h \
+		GenericBall.h \
+		TwoVector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StandardBall.o StandardBall.cpp
 
 moc_GenericBall.o: moc_GenericBall.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_GenericBall.o moc_GenericBall.cpp

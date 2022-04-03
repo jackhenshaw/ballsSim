@@ -10,11 +10,13 @@ TEMPLATE = app
 SOURCES += \
   main.cpp \
   TwoVector.cpp \
-  GenericBall.cpp
+  GenericBall.cpp \
+  StandardBall.cpp
 
 HEADERS += \
   TwoVector.h \
-  GenericBall.h
+  GenericBall.h \
+  StandardBall.h
 
 #FORMS += \
 #  ControlWindow.ui \
