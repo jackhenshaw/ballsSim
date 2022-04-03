@@ -1,6 +1,6 @@
 /* Author: Jack Henshaw
  * Created on: 01/04/2022
- * Last edited 01/04/2022
+ * Last edited 03/04/2022
  * Header file for defining a 2D vector and how this interacts
  */
 
@@ -34,7 +34,7 @@ public:
   inline double Angle(TwoVector a);
 
   // operators
-  inline TwoVector & operator =  (TwoVector &);
+  inline TwoVector & operator =  (const TwoVector &);
   inline TwoVector & operator += (TwoVector &);
   inline TwoVector & operator -= (TwoVector &);
   inline TwoVector & operator *= (double);
@@ -92,7 +92,7 @@ inline double TwoVector::Angle(TwoVector a) {
 }
 
 // operators
-inline TwoVector & TwoVector::operator = (TwoVector &p) {
+inline TwoVector & TwoVector::operator = (const TwoVector &p) {
   fX = p.fX;
   fY = p.fY;
   return *this;

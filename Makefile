@@ -53,9 +53,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		TwoVector.cpp 
+		TwoVector.cpp \
+		GenericBall.cpp moc_GenericBall.cpp
 OBJECTS       = main.o \
-		TwoVector.o
+		TwoVector.o \
+		GenericBall.o \
+		moc_GenericBall.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
 		/usr/lib64/qt5/mkspecs/common/linux.conf \
@@ -133,8 +136,10 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/exceptions.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
-		project.pro TwoVector.h main.cpp \
-		TwoVector.cpp
+		project.pro TwoVector.h \
+		GenericBall.h main.cpp \
+		TwoVector.cpp \
+		GenericBall.cpp
 QMAKE_TARGET  = test
 DESTDIR       = build/
 TARGET        = build/test
@@ -319,8 +324,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents TwoVector.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp TwoVector.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents TwoVector.h GenericBall.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp TwoVector.cpp GenericBall.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -352,8 +357,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_GenericBall.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_GenericBall.cpp
+moc_GenericBall.cpp: GenericBall.h \
+		TwoVector.h \
+		moc_predefs.h \
+		/../lib64/qt5/bin/moc
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/Jack/Documents/cpp/ballsSim/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/Jack/Documents/cpp/ballsSim -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/c++/11/x86_64-redhat-linux -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-redhat-linux/11/include -I/usr/local/include -I/usr/include GenericBall.h -o moc_GenericBall.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -366,7 +378,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -375,6 +387,13 @@ main.o: main.cpp
 
 TwoVector.o: TwoVector.cpp TwoVector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TwoVector.o TwoVector.cpp
+
+GenericBall.o: GenericBall.cpp GenericBall.h \
+		TwoVector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GenericBall.o GenericBall.cpp
+
+moc_GenericBall.o: moc_GenericBall.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_GenericBall.o moc_GenericBall.cpp
 
 ####### Install
 
