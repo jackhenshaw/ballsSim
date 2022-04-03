@@ -13,9 +13,29 @@ TwoVector::TwoVector() : fX(0.0), fY(0.0) {}
 
 TwoVector::TwoVector(double x, double y) : fX(x), fY(y) {}
 
-TwoVector::TwoVector(const double *a) : fX(a[0]), fY(a[1]) {}
+TwoVector::TwoVector(double *a) : fX(a[0]), fY(a[1]) {}
 
-TwoVector::TwoVector(const TwoVector &t) : fX(t.fX), fY(t.fY) {}
+TwoVector::TwoVector(TwoVector &t) : fX(t.fX), fY(t.fY) {}
 
 TwoVector::~TwoVector() {}
 
+// operators
+TwoVector operator + (TwoVector &a,TwoVector &b) {
+  return TwoVector(a.X() + b.X(), a.Y() + b.Y());
+}
+
+TwoVector operator - (TwoVector &a, TwoVector &b) {
+  return TwoVector(a.X() - b.X(), a.Y() - b.Y());
+}
+
+TwoVector operator * (TwoVector &a, double f) {
+  return TwoVector(f*a.X(), f*a.Y());
+}
+
+TwoVector operator * (double f, TwoVector &a) {
+  return TwoVector(f*a.X(), f*a.Y());
+}
+
+void TwoVector::Print() {
+  printf("Vector = (%.3f, %.3f)", fX, fY);
+}

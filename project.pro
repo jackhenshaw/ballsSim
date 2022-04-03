@@ -5,7 +5,7 @@ TARGET = build/test
 TEMPLATE = app
 
 # Warnings if any feature of Qt has been marked as deprecated
-DEFINES += QT_DEPRECATED_WARNINGS
+# DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
   main.cpp \
