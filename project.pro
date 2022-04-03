@@ -5,18 +5,20 @@ TARGET = build/test
 TEMPLATE = app
 
 # Warnings if any feature of Qt has been marked as deprecated
-# DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
   main.cpp \
   TwoVector.cpp \
   GenericBall.cpp \
-  StandardBall.cpp
+  StandardBall.cpp \
+  Simulation.cpp
 
 HEADERS += \
   TwoVector.h \
   GenericBall.h \
-  StandardBall.h
+  StandardBall.h \
+  Simulation.h
 
 #FORMS += \
 #  ControlWindow.ui \

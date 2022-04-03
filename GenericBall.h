@@ -20,30 +20,30 @@ class GenericBall: public QObject, public QGraphicsEllipseItem {
   Q_OBJECT // allows balls to handle signals and slots
 
 public:
-    GenericBall();
-    GenericBall(TwoVector position, TwoVector Velocity);
-    virtual ~GenericBall();
+  GenericBall();
+  GenericBall(TwoVector position, TwoVector Velocity);
+  virtual ~GenericBall();
 
-    // Getters and Setters
-    inline TwoVector GetPosition() { return fPosition; }
-    inline void SetPosition(TwoVector position) { fPosition = position; }
-    inline TwoVector GetVelocity() { return fVelocity; }
-    inline void SetVelocity(TwoVector velocity) { fVelocity = velocity; }
+  // Getters and Setters
+  inline TwoVector GetPosition() const { return fPosition; }
+  inline void SetPosition(TwoVector position) { fPosition = position; }
+  inline TwoVector GetVelocity() const { return fVelocity; }
+  inline void SetVelocity(TwoVector velocity) { fVelocity = velocity; }
 
-    // Functions relating to movement of balls
-    void ContainBall(); // keep ball inside container
-    void CollidingBalls(); // checks for collisions and changes velocity accordingly
+  // Functions relating to movement of balls
+  void ContainBall(); // keep ball inside container
+  void CollidingBalls(); // checks for collisions and changes velocity accordingly
 
-    virtual void paint(QPainter *painter, QStyleOptionGraphicsItem *option,
-                       QWidget *widget) = 0;
+  virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                     QWidget *widget) = 0;
 
 protected: // protected as wish to be inherited in daughter classes
-    virtual void advance(int phase) = 0; // how the ball will move
+  virtual void advance(int phase) = 0; // how the ball will move
 
-    TwoVector fPosition;
-    TwoVector fVelocity;
-    double fBallSize = 20; // size of ball on screen
-    double timeStep = 0.5; // time between each evaluation of the balls position
+  TwoVector fPosition;
+  TwoVector fVelocity;
+  double fBallSize = 20; // size of ball on screen
+  double timeStep = 0.5; // time between each evaluation of the balls position
 };
 
 #endif /* GENERICBALL_H_ */

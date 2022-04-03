@@ -14,7 +14,7 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
@@ -55,12 +55,16 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		TwoVector.cpp \
 		GenericBall.cpp \
-		StandardBall.cpp moc_GenericBall.cpp
+		StandardBall.cpp \
+		Simulation.cpp moc_GenericBall.cpp \
+		moc_Simulation.cpp
 OBJECTS       = main.o \
 		TwoVector.o \
 		GenericBall.o \
 		StandardBall.o \
-		moc_GenericBall.o
+		Simulation.o \
+		moc_GenericBall.o \
+		moc_Simulation.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
 		/usr/lib64/qt5/mkspecs/common/linux.conf \
@@ -140,10 +144,12 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		project.pro TwoVector.h \
 		GenericBall.h \
-		StandardBall.h main.cpp \
+		StandardBall.h \
+		Simulation.h main.cpp \
 		TwoVector.cpp \
 		GenericBall.cpp \
-		StandardBall.cpp
+		StandardBall.cpp \
+		Simulation.cpp
 QMAKE_TARGET  = test
 DESTDIR       = build/
 TARGET        = build/test
@@ -328,8 +334,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents TwoVector.h GenericBall.h StandardBall.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp TwoVector.cpp GenericBall.cpp StandardBall.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents TwoVector.h GenericBall.h StandardBall.h Simulation.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp TwoVector.cpp GenericBall.cpp StandardBall.cpp Simulation.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -361,14 +367,22 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_GenericBall.cpp
+compiler_moc_header_make_all: moc_GenericBall.cpp moc_Simulation.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_GenericBall.cpp
+	-$(DEL_FILE) moc_GenericBall.cpp moc_Simulation.cpp
 moc_GenericBall.cpp: GenericBall.h \
 		TwoVector.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
 	/../lib64/qt5/bin/moc $(DEFINES) --include /home/Jack/Documents/cpp/ballsSim/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/Jack/Documents/cpp/ballsSim -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/c++/11/x86_64-redhat-linux -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-redhat-linux/11/include -I/usr/local/include -I/usr/include GenericBall.h -o moc_GenericBall.cpp
+
+moc_Simulation.cpp: Simulation.h \
+		StandardBall.h \
+		GenericBall.h \
+		TwoVector.h \
+		moc_predefs.h \
+		/../lib64/qt5/bin/moc
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/Jack/Documents/cpp/ballsSim/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/Jack/Documents/cpp/ballsSim -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/c++/11/x86_64-redhat-linux -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-redhat-linux/11/include -I/usr/local/include -I/usr/include Simulation.h -o moc_Simulation.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -401,8 +415,17 @@ StandardBall.o: StandardBall.cpp StandardBall.h \
 		TwoVector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StandardBall.o StandardBall.cpp
 
+Simulation.o: Simulation.cpp Simulation.h \
+		StandardBall.h \
+		GenericBall.h \
+		TwoVector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Simulation.o Simulation.cpp
+
 moc_GenericBall.o: moc_GenericBall.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_GenericBall.o moc_GenericBall.cpp
+
+moc_Simulation.o: moc_Simulation.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Simulation.o moc_Simulation.cpp
 
 ####### Install
 

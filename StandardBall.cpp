@@ -12,8 +12,7 @@ StandardBall::StandardBall(TwoVector pos, TwoVector vel) : GenericBall(pos, vel)
 
 StandardBall::~StandardBall() {};
 
-void StandardBall::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                         QWidget *widget) {
+void StandardBall::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   Q_UNUSED(option);
   Q_UNUSED(widget);
   painter->fillPath(shape(), QBrush(Qt::red));   // fill

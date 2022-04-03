@@ -9,8 +9,7 @@
 
 #include "GenericBall.h"
 
-class StandardBall: public GenericBall
-{
+class StandardBall: public GenericBall {
 public:
     StandardBall();
     StandardBall(TwoVector position, TwoVector velocity);
