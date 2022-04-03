@@ -12,14 +12,18 @@ SOURCES += \
   TwoVector.cpp \
   GenericBall.cpp \
   StandardBall.cpp \
-  Simulation.cpp
+  Simulation.cpp \
+  ControlWindow.cpp \
+  DisplayWindow.cpp
 
 HEADERS += \
   TwoVector.h \
   GenericBall.h \
   StandardBall.h \
-  Simulation.h
+  Simulation.h \
+  ControlWindow.h \
+  DisplayWindow.h
 
-#FORMS += \
-#  ControlWindow.ui \
-#  DisplayWindow.ui
+FORMS += \
+  ControlWindow.ui \
+  DisplayWindow.ui
